@@ -17,11 +17,12 @@ const parseOptions = {
 
 const UploadComponent = ({ lp, handleFileData }) => {
   return (
-    <div className="card p-3 col-6">
+    <div className="card p-3 col-12">
       <h2>Upload file</h2>
      
         <CSVReader
-          cssClass="csv-reader-input"
+          cssClass=""
+          cssInpuClass="form-control form-control-lg"
           label="Select CSV file with LP or TOU"
           onFileLoaded={handleFileData}
           // onError={this.handleDarkSideForce}
@@ -29,10 +30,20 @@ const UploadComponent = ({ lp, handleFileData }) => {
           inputId="ObiWan"
           inputStyle={{color: 'red'}}
         />
-{/*     
-      <button onClick={()=> handleFileData}
-                className="btn btn-primary mt-2">Save Data</button> */}
-      <div>{JSON.stringify(lp)}</div>
+      <div>
+        <div>{lp.length > 0 ? 'File uploaded' : ''}</div>
+        <div class="table-responsive-sm">
+          <table class="table">
+            {lp.map((val, index) => (
+              <tr key={index}>
+                <td>{val.meterPointCode}</td>
+                <td>{val.dateTime}</td>
+                <td>{val.dataValue}</td>
+              </tr>
+            ))}
+          </table>
+        </div>
+        </div>
     </div>
   );
 };
@@ -46,10 +57,10 @@ const mapStateToProps = ( state, ownProps ) => {
 };
 
 const mapDispatchToProps = (dispatch) => {
-  // const id = new GUI
   return {
-    handleFileData(data) {
+    handleFileData(data, fileDetails) {
       console.log(JSON.stringify(data));
+      console.log(fileDetails, fileDetails.name);
       const cleanData = data.map((val, index) => { 
         return {id:uuidv4(),
           meterPointCode:val.meterpoint_code,

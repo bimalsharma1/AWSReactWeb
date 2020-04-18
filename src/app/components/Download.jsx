@@ -1,79 +1,92 @@
 import React from "react";
-import CSVReader from 'react-csv-reader'
+import CsvDownloader from 'react-csv-downloader';
 import { connect } from "react-redux";
 import * as mutations from "../store/mutations";
 import { v4 as uuidv4 } from 'uuid';
 
-
-const parseOptions = {
-  header: true,
-  dynamicTyping: true,
-  skipEmptyLines: true,
-  transformHeader: header =>
-    header
-      .toLowerCase()
-      .replace(/\W/g, '_')
-}
-
-const DownloadComponent = ({ lp, handleFileData }) => {
+const DownloadComponent = ({ filter, setFilterDate, setFilterMeter, setFilterDataType, setFilterData, datas }) => {
   return (
-    <div className="card p-3 col-6">
-            <div>
-                <input onChange={setTaskName} value={task.name}
-                className="form-control form-control-lg"/>
-            </div>
-            <div>
-                <button onClick={()=> setTaskCompletion(id, !isComplete)}
-                className="btn btn-primary mt-2">{isComplete ? `Reopen` : `Complete`}</button>
-            </div>
-            <div>
-                <select onChange={setTaskGroup} value={task.group}
-                className="form-control">
-                    {groups.map(group => (
-                        <option key={group.id} value={group.id}>{group.name}</option>
-                    ))}
-                </select>
-            </div>
-            <div>
-                <Link to="/dashboard">
-                    <button className="btn btn-primary mt-2">Done</button>
-                </Link>
-            </div>
+    <div>
+      <div className="card p-3 col-12">
+        <div>
+          <input onChange={setFilterDate} value={filter.date}
+            className="form-control form-control-lg" />
         </div>
+        <div>
+          <input onChange={setFilterMeter} value={filter.meter}
+            className="form-control form-control-lg" />
+        </div>
+        <div>
+          <input onChange={setFilterDataType} value={filter.dataType}
+            className="form-control form-control-lg" />
+        </div>
+        <div>
+          <button onClick={() => setFilterData(filter.date, filter.meter, filter.dataType)}
+            className="btn btn-primary mt-2">GetData</button>
+        </div>
+
+        <div>
+        <a href="/" target="_top">Back</a>
+        </div>
+      </div>
+      <div>
+        <CsvDownloader
+          filename="myfile"
+          separator=";"
+          wrapColumnChar="'"
+          // columns={columns}
+          datas={datas}
+          text="DOWNLOAD" />
+      </div>
+    </div>
   );
 };
 
-const mapStateToProps = ( state, ownProps ) => {
-  console.log(JSON.stringify(state));
-  console.log(JSON.stringify(ownProps));
+const mapStateToProps = (state, ownProps) => {
   return {
-    lp:state.lp
+    filter: { date: '', meter: '', dataType: '' },
+    datas: {}
   }
 };
 
 const mapDispatchToProps = (dispatch) => {
   // const id = new GUI
   return {
-    handleFileData(data) {
-      console.log(JSON.stringify(data));
-      const cleanData = data.map((val, index) => { 
-        return {id:uuidv4(),
-          meterPointCode:val.meterpoint_code,
-          serialNumber:val.serial_number,
-          plantCode:val.plant_code,
-          dateTime:val.date_time,
-          dataType:val.data_type,
-          dataValue:val.data_value,
-          units:val.units,
-          status:val.status}; 
-    }) 
-      
-      dispatch(mutations.requestLPCreation(cleanData));
+    setFilterDate(id) {
+      dispatch(requestTaskCreation(id));
     },
-    createNewTask(id) {
-        console.log("Creating file contents", id);
-        dispatch(requestTaskCreation(id));
+    setFilterMeter(id) {
+      dispatch(requestTaskCreation(id));
+    },
+    setFilterDataType(id) {
+      dispatch(requestTaskCreation(id));
+    },
+    setFilterData(id) {
+      dispatch(requestTaskCreation(id));
     }
+    // setFilterDate, setFilterMeter, setFilterDataType, setFilterData
+    // handleFileData(data) {
+    //   console.log(JSON.stringify(data));
+    //   const cleanData = data.map((val, index) => {
+    //     return {
+    //       id: uuidv4(),
+    //       meterPointCode: val.meterpoint_code,
+    //       serialNumber: val.serial_number,
+    //       plantCode: val.plant_code,
+    //       dateTime: val.date_time,
+    //       dataType: val.data_type,
+    //       dataValue: val.data_value,
+    //       units: val.units,
+    //       status: val.status
+    //     };
+    //   })
+
+    //   dispatch(mutations.requestLPCreation(cleanData));
+    // },
+    // createNewTask(id) {
+    //   console.log("Creating file contents", id);
+    //   dispatch(requestTaskCreation(id));
+    // }
   }
 };
 

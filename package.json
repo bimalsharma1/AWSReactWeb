@@ -22,6 +22,7 @@
     "history": "^4.7.2",
     "md5": "^2.2.1",
     "react": "^16.4.2",
+    "react-csv-downloader": "^1.6.0",
     "react-csv-reader": "^3.0.5",
     "react-dom": "^16.5.0",
     "react-redux": "^5.0.7",
