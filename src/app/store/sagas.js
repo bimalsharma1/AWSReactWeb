@@ -5,6 +5,9 @@ import * as mutations from '../store/mutations';
 import { history } from './history';
 
 const url = "https://ojizvqku9g.execute-api.ap-southeast-2.amazonaws.com/Prod/";
+const options = {
+  headers: {'Access-Control-Allow-Origin': '*'}
+};
 
 export function* saveLPSaga() {
     console.info("start save LP ");
@@ -14,7 +17,7 @@ export function* saveLPSaga() {
 
         axios.post(url,{
             lp: lp.lp
-        });
+        }, options);
     }
 }
 
@@ -31,7 +34,7 @@ export function* saveTOUSaga() {
               isComplete: task.isComplete,
               name: task.name
           }
-      });
+      }, options);
   }
 }
 
