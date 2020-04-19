@@ -1,17 +1,18 @@
 import React from "react";
-import CsvDownloader from 'react-csv-downloader';
+import { CSVLink, CSVDownload } from "react-csv";
 import { connect } from "react-redux";
 import * as mutations from "../store/mutations";
 import { v4 as uuidv4 } from 'uuid';
+import axios from 'axios';
 
 const DownloadComponent = ({ filter, setFilterDate, setFilterMeter, setFilterDataType, setFilterData, loadData, lpSummary }) => {
   return (
     <div>
-      <div>
+      {/* <div>
         <button onClick={() => loadData()}
           className="btn btn-primary mt-2">GetData</button>
       </div>
-      <div>{JSON.stringify(lpSummary)}</div>
+      <div>{JSON.stringify(lpSummary)}</div> */}
       <div className="card p-3 col-12">
         <div>
           <div>
@@ -23,15 +24,29 @@ const DownloadComponent = ({ filter, setFilterDate, setFilterMeter, setFilterDat
                     <th scope="col">Min</th>
                     <th scope="col">Max</th>
                     <th scope="col">Median</th>
+                    <th scope="col">Download Link</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td>{lpSummary?.meterPointCode}</td>
-                    <td>{lpSummary?.dateTime}</td>
-                    <td>{lpSummary?.dataValue}</td>
-                    <td>{lpSummary?.dataType}</td>
-                  </tr>
+                  {lpSummary.map((val, index) => (
+                    <tr key={index}>
+                      <td>{val?.FileName}</td>
+                      <td>{val?.Min}</td>
+                      <td>{val?.Max}</td>
+                      <td>{val?.Median}</td>
+                      <td> 
+                     
+                        <CSVLink
+                            data={lpSummary}
+                            filename={val?.FileName}
+                            className="btn btn-primary"
+                            target="_blank"
+                          >
+                            Download
+                        </CSVLink>
+                        </td>
+                    </tr>
+                  ))}
                 </tbody>
               </table>
             </div>
@@ -59,15 +74,7 @@ const DownloadComponent = ({ filter, setFilterDate, setFilterMeter, setFilterDat
           <a href="/" target="_top">Back</a>
         </div>
       </div>
-      <div>
-        {/* <CsvDownloader
-          filename="myfile"
-          separator=";"
-          wrapColumnChar="'"
-          // columns={columns}
-          lpSummary={lpSummary}
-          text="DOWNLOAD" /> */}
-      </div>
+    
     </div>
   );
 };

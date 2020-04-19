@@ -16,9 +16,11 @@ export const store = createStore(
             }
             return lps;
         },
-        lpSummary(lpSummary = null, action) {
+        lpSummary(lpSummary = [], action) {
             switch (action.type) {
                 case mutations.REQUEST_LPSUMMARY_CREATION:
+                    return action.lps ? action.lps : null;
+                case mutations.SET_LP_SUMMARY:
                     return action.lps ? action.lps : null;
             }
             return lpSummary;

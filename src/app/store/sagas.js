@@ -31,11 +31,8 @@ export function* saveLPSummarySaga() {
   }
 }
 export function* getLPSummarySaga() {
-  while (true) {
     const { data } = yield axios.get(url + '/summary', options);
-
     yield put(mutations.setLPSUMMARY(data));
-  }
 }
 
 export function* saveTOUSaga() {

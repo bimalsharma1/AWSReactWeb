@@ -12,7 +12,7 @@ export const NOT_AUTHENTICATED = "NOT_AUTHENTICATED";
 export const SET_STATE = "SET_STATE";
 export const REQUEST_LP_CREATION = `REQUEST_LP_CREATION`;
 export const REQUEST_LPSUMMARY_CREATION = `REQUEST_LPSUMMARY_CREATION`;
-export const REQUEST_LPSUMMARY = `REQUEST_LPSUMMARY`;
+export const REQUEST_LP_SUMMARY = `REQUEST_LP_SUMMARY`;
 export const REQUEST_TOU_CREATION = `REQUEST_TOU_CREATION`;
 
 export const requestLPCreation = (lp) => ({
@@ -48,7 +48,7 @@ export const createTask = (taskID, groupID, ownerID) => ({
 })
 
 export const setLPSUMMARY = (lps) => ({
-    type: REQUEST_LP_SUMMARY,
+    type: SET_LP_SUMMARY,
     lps
 })
 
