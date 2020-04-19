@@ -3,6 +3,7 @@ export const CREATE_TASK = `CREATE_TASK`;
 export const SET_TASK_COMPLETE = `SET_TASK_COMPLETE`;
 export const SET_TASK_GROUP = `SET_TASK_GROUP`;
 export const SET_TASK_NAME = `SET_TASK_NAME`;
+export const SET_LP_SUMMARY = `SET_LP_SUMMARY`
 export const REQUEST_AUTHENTICATE_USER = `REQUEST_AUTHENTICATE_USER`;
 export const PROCESSING_AUTHENTICATE_USER = "PROCESSING_AUTHENTICATE_USER";
 export const AUTHENTICATING = "AUTHENTICATING";
@@ -10,11 +11,23 @@ export const AUTHENTICATED = "AUTHENTICATED";
 export const NOT_AUTHENTICATED = "NOT_AUTHENTICATED";
 export const SET_STATE = "SET_STATE";
 export const REQUEST_LP_CREATION = `REQUEST_LP_CREATION`;
+export const REQUEST_LPSUMMARY_CREATION = `REQUEST_LPSUMMARY_CREATION`;
+export const REQUEST_LPSUMMARY = `REQUEST_LPSUMMARY`;
 export const REQUEST_TOU_CREATION = `REQUEST_TOU_CREATION`;
 
 export const requestLPCreation = (lp) => ({
     type: REQUEST_LP_CREATION,
     lp
+});
+
+export const requestLPSummaryCreation = (lps = null) => ({
+    type: REQUEST_LPSUMMARY_CREATION,
+    lps
+});
+
+export const requestLPSummary = (lps = null) => ({
+    type: REQUEST_LP_SUMMARY,
+    lps
 });
 
 export const requestTOUCreation = (tou) => ({
@@ -32,6 +45,11 @@ export const createTask = (taskID, groupID, ownerID) => ({
     taskID,
     groupID,
     ownerID
+})
+
+export const setLPSUMMARY = (lps) => ({
+    type: REQUEST_LP_SUMMARY,
+    lps
 })
 
 export const setTaskCompletion = (id, isComplete) => ({

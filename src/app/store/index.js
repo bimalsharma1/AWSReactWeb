@@ -16,6 +16,13 @@ export const store = createStore(
             }
             return lps;
         },
+        lpSummary(lpSummary = null, action) {
+            switch (action.type) {
+                case mutations.REQUEST_LPSUMMARY_CREATION:
+                    return action.lps ? action.lps : null;
+            }
+            return lpSummary;
+        },
         session(userSession = [] || {}, action) {
             let { type, authenticated, session } = action;
             switch (type) {

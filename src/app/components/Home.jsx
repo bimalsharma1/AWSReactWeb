@@ -31,7 +31,9 @@ const mapStateToProps = ( state, ownProps ) => {
 };
 
 const mapDispatchToProps = (dispatch) => {
+  // dispatch(mutations.requestLPSummary());
   return {
+    
   }
 };
 

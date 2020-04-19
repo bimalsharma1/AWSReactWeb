@@ -4,11 +4,41 @@ import { connect } from "react-redux";
 import * as mutations from "../store/mutations";
 import { v4 as uuidv4 } from 'uuid';
 
-const DownloadComponent = ({ filter, setFilterDate, setFilterMeter, setFilterDataType, setFilterData, datas }) => {
+const DownloadComponent = ({ filter, setFilterDate, setFilterMeter, setFilterDataType, setFilterData, loadData, lpSummary }) => {
   return (
     <div>
+      <div>
+        <button onClick={() => loadData()}
+          className="btn btn-primary mt-2">GetData</button>
+      </div>
+      <div>{JSON.stringify(lpSummary)}</div>
       <div className="card p-3 col-12">
         <div>
+          <div>
+            <div class="table-responsive-sm">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">File Name</th>
+                    <th scope="col">Min</th>
+                    <th scope="col">Max</th>
+                    <th scope="col">Median</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>{lpSummary?.meterPointCode}</td>
+                    <td>{lpSummary?.dateTime}</td>
+                    <td>{lpSummary?.dataValue}</td>
+                    <td>{lpSummary?.dataType}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <br />
+        {/* <div>
           <input onChange={setFilterDate} value={filter.date}
             className="form-control form-control-lg" />
         </div>
@@ -23,20 +53,20 @@ const DownloadComponent = ({ filter, setFilterDate, setFilterMeter, setFilterDat
         <div>
           <button onClick={() => setFilterData(filter.date, filter.meter, filter.dataType)}
             className="btn btn-primary mt-2">GetData</button>
-        </div>
+        </div> */}
 
         <div>
-        <a href="/" target="_top">Back</a>
+          <a href="/" target="_top">Back</a>
         </div>
       </div>
       <div>
-        <CsvDownloader
+        {/* <CsvDownloader
           filename="myfile"
           separator=";"
           wrapColumnChar="'"
           // columns={columns}
-          datas={datas}
-          text="DOWNLOAD" />
+          lpSummary={lpSummary}
+          text="DOWNLOAD" /> */}
       </div>
     </div>
   );
@@ -45,25 +75,32 @@ const DownloadComponent = ({ filter, setFilterDate, setFilterMeter, setFilterDat
 const mapStateToProps = (state, ownProps) => {
   return {
     filter: { date: '', meter: '', dataType: '' },
-    datas: {}
+    lpSummary: state.lpSummary
   }
 };
 
 const mapDispatchToProps = (dispatch) => {
-  // const id = new GUI
+  // if (!state.lpSummary) {
+  // dispatch(mutations.requestLPSummary());
+  // }
+
   return {
-    setFilterDate(id) {
-      dispatch(requestTaskCreation(id));
-    },
-    setFilterMeter(id) {
-      dispatch(requestTaskCreation(id));
-    },
-    setFilterDataType(id) {
-      dispatch(requestTaskCreation(id));
-    },
-    setFilterData(id) {
-      dispatch(requestTaskCreation(id));
+    loadData() {
+      dispatch(mutations.requestLPSummary());
     }
+
+    // setFilterDate(id) {
+    //   dispatch(requestTaskCreation(id));
+    // },
+    // setFilterMeter(id) {
+    //   dispatch(requestTaskCreation(id));
+    // },
+    // setFilterDataType(id) {
+    //   dispatch(requestTaskCreation(id));
+    // },
+    // setFilterData(id) {
+    //   dispatch(requestTaskCreation(id));
+    // }
     // setFilterDate, setFilterMeter, setFilterDataType, setFilterData
     // handleFileData(data) {
     //   console.log(JSON.stringify(data));
